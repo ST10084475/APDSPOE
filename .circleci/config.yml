@@ -21,6 +21,13 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+           - run:
+          name: Run Tests
+          command: npm test # or equivalent for your project
+      - sonarcloud/scan:
+          sonar-token: $SONAR_TOKEN
+          organization: "st10084475" 
+          project-key: "ST10084475_APDSPOE"    
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/workflows/ & https://circleci.com/docs/configuration-reference/#workflows

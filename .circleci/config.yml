@@ -1,0 +1,37 @@
+version: 2.1
+
+# Import SonarCloud orb
+orbs:
+  sonarcloud: sonarsource/sonarcloud@1.0.1
+
+# Define jobs
+jobs:
+  say-hello:
+    docker:
+      - image: cimg/base:current  # Use the appropriate Docker image for your project
+    steps:
+      # Checkout code
+      - checkout
+
+      # Install dependencies (update as per your project requirements)
+      - run:
+          name: Install Dependencies
+          command: npm install
+
+      # Run tests (or your equivalent testing command)
+      - run:
+          name: Run Tests
+          command: npm test
+
+      # Run SonarCloud scan
+      - sonarcloud/scan:
+          sonar-token: $SONAR_TOKEN  # Make sure this is set as an environment variable in CircleCI
+          organization: "st10084475"  # Replace with your SonarCloud organization
+          project-key: "ST10084475_APDSPOE"  # Replace with your SonarCloud project key
+
+# Define workflows
+workflows:
+  version: 2
+  build_and_analyze:
+    jobs:
+      - say-hello
